@@ -1,0 +1,22 @@
+trigger:
+- main
+
+resources:
+  repositories:
+  - repository: {{ repository }}
+    type: {{ type }}
+    name: {{ name }}
+    endpoint: {{ endpoint }}
+    ref: {{ ref }}
+
+pool:
+  vmImage: {{ vmImage }}
+
+
+stages:
+- stage: Checkout
+  displayName: checkout github repository
+  jobs:  
+  - job: Checkout
+    displayName: checkout github repository 
+    steps:

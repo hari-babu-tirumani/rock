@@ -1,0 +1,3 @@
+steps: 
+    - checkout: {{ repository }}
+      displayName: 'check out github'
