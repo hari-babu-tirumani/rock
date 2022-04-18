@@ -1,0 +1,21 @@
+pipeline {
+    agent any
+    stages {
+
+        stage('git checkout') { 
+          steps {
+            git credentialsId: 'github_credentials', url: 'https://github.com/hari-babu-tirumani/gradlewar.git', branch: 'master'
+          }
+        }
+        stage('gradle build') {
+            steps{
+                sh 'chmod +x ./gradlew && ./gradlew clean build'
+            }
+        } 
+        stage('publish') {
+            steps{
+                sshagent(['apache']) {
+                sh "scp -o StrictHostKeyChecking=no build/libs/SampleWebApp-0.0.1-SNAPSHOT.war ec2-user@204.236.164.13:/home/ec2-user/apache-tomcat-9.0.62/webapps"
+            }
+        }
+    }    
